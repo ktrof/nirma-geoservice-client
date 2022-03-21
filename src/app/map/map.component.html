@@ -1,5 +1,48 @@
-<div class="map-container">
-  <div class="map-frame">
-    <div id="map"></div>
+<div id="monitor">
+  <div class="monitor-row">
+    <div class="monitor-map">
+      <div class="map-frame">
+        <div id="map"></div>
+      </div>
+    </div>
+    <div class="monitor-dsc">
+      <form [formGroup]="mapForm">
+        <div class="monitor__dsc_head">
+          <div class="monitor__dsc_head-title">
+            Выбрать слой
+          </div>
+          <div class="monitor__dsc_head-btn" (click)="resetComponent()">
+            <a href="" class="btn-clear btn-border">
+              Сбросить настройки
+            </a>
+          </div>
+        </div>
+        <div class="monitor__dsc_content">
+          <div class="monitor__item" *ngFor="let nirmaModel of nirmaModels; let i = index">
+            <div class="monitor__item-head">
+              <label class="checkbox">
+                <input type="radio" class="check" [value]="nirmaModel.requestParam === null ? i : nirmaModel.requestParam" formControlName="requestParam"
+                       (change)="initHeatmap(nirmaModel.requestParam); resetInnerForm()">
+                <span class="check-custom"></span>
+                <span class="label">{{ nirmaModel.description }}</span>
+              </label>
+            </div>
+            <div class="monitor__item-content" *ngIf="nirmaModel.innerModels !== null">
+              <div class="monitor__item-title">
+                {{ nirmaModel.description }}
+              </div>
+              <div class="monitor__item-list" *ngFor="let innerModel of nirmaModel.innerModels; let i = index" formGroupName="innerModel">
+                <label class="checkbox">
+                  <input type="radio" class="check" [value]="innerModel.requestParam === null ? i : innerModel.requestParam" formControlName="requestParam" name="requestParam"
+                         (change)="initDistricts(innerModel.requestParam)">
+                  <span class="check-custom"></span>
+                  <span class="label">{{ innerModel.description }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

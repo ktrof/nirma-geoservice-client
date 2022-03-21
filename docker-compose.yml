@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  nirma-ui:
+    image: tkremen/nirma-front:1.0
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+    container_name: nirma-ui
+    environment:
+      API_HOST: host.docker.internal
+    ports:
+      - 8081:80
+    networks:
+      - nirma-network
+
+networks:
+  nirma-network:
+    external: true
+    name: custom-nirma-network
